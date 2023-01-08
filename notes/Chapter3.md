@@ -93,3 +93,110 @@ fn main() {
 ```
 
 * __NOTE:__ the line `x+1` do not have a semicolon at the end because it is a statement! If it had, it would be understood as an expression;
+
+## Control flow
+
+This is a common feature of all languages, is the ability to run some code given a condition.
+
+### `if` expression
+
+* The syntax is just like C;
+
+* Unlike other languages, a condition must be a __boolean__, other types of values won't be automatically converted;
+
+* It is possible to make it in an one-liner. But both values must be of the same type! Check an example below:
+
+```rust
+    let a = if condition { 5 } else { 6 }; // This is OK.
+    let a = if condition { 5 } else { '6' }; // This is BAD. The compiler will indicate this as an error.
+```
+
+* __NOTE:__ we can't set different types for the same varialbe in an `if` expression and use it outside the if branches, as the compiler must know the type of the variable after the execution.
+
+### Repetion loops
+
+#### `loop` repetion
+
+* This is a never ending loop, you must explictly break this using a `break`;
+
+* In this case, using `continue` is also a good idea to skip some unwanted code an go to the next iteration;
+
+* `loop`s can return values! One of the use cases of this operator is to retry an operation until it completed it's job and you may need the result of this operation. The return value must be provided after the `break`. Check how to do it:
+
+```rust
+fn main() {
+    let mut counter = 0;
+
+    let result = loop {
+        counter += 1;
+
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+
+    println!("The result is {result}");
+}
+```
+
+* When nesting loops, the `break` and `continue` operations are used in the innermost loop. In this case you can specify the outermost or any intermediary using the loop labeling. Check it out:
+
+```rust
+fn main() {
+    let mut count = 0;
+    'counting_up: loop {
+        println!("count = {count}");
+        let mut remaining = 10;
+
+        loop {
+            println!("remaining = {remaining}");
+            if remaining == 9 {
+                break;
+            }
+            if count == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        count += 1;
+    }
+    println!("End count = {count}");
+}
+```
+
+### `while` repetition
+
+* A `while` loop runs while the condition is `true`. It is useful because it cuts a lot of the need for conditional inside the loop to determine when to break it;
+
+* The syntax looks like C:
+
+```rust
+fn main() {
+    let mut number = 3;
+
+    while number != 0 {
+        println!("{number}!");
+
+        number -= 1;
+    }
+
+    println!("LIFTOFF!!!");
+}
+```
+
+### `for` repetion
+
+* Is the safest way to iterate over a collection, such as an array.
+
+* The syntax looks like something between Python and C. Check it out:
+
+```rust
+fn main() {
+    let a = [10, 20, 30, 40, 50];
+
+    for element in a {
+        println!("the value is: {element}");
+    }
+}
+```
